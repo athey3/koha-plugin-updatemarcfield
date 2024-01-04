@@ -1,0 +1,40 @@
+[% INCLUDE 'doc-head-open.inc' %]
+<title>Koha &rsaquo; Tools &rsaquo; Plugins &rsaquo; Update Marc Field in records</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script type="text/javascript" src="[% interface %]/lib/jsdiff/jsdiff.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      var diff1 = $("#col1 pre").text();
+      var diff2 = $("#col2 pre").text();
+      var diffs = diffString(diff1,diff2);
+      $("#col1 pre,#col2 pre").html(diffs);
+      $("#close-button").click(function() {
+        window.close();
+      });
+    });
+</script>
+<style type="text/css">
+    ins { background-color: #e6ffe6; }
+    del { background-color: #ffe6e6; }
+    #col1 ins, #col2 del { display: none; }
+    pre { padding: 10px; overflow: scroll; }
+</style>
+</head>
+<body id="tools_compare-marc-import" class="tools">
+
+[% INCLUDE 'header.inc' %]
+
+<div id="doc3">
+    <div class="yui-g">
+        <div id="col1" class="yui-u first">
+            <h1>Original record</h1>
+            <pre>[% MARC_FORMATTED1 %]</pre>
+        </div>
+        <div id="col2" class="yui-u">
+            <h1>Record with URL</h1>
+            <pre>[% MARC_FORMATTED2 %] </pre>
+        </div>
+    </div>
+
+<p><a href="#" class="btn" id="close-button">Close</a></p>
+[% INCLUDE 'intranet-bottom.inc' %]
