@@ -1,0 +1,64 @@
+[% INCLUDE 'doc-head-open.inc' %]
+ <title>Koha &rsaquo; Tools &rsaquo; Update Marc Field in records</title>
+[% INCLUDE 'doc-head-close.inc' %]
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+
+<div id="breadcrumbs">
+    <a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+    Update Field in records
+</div>
+
+<div id="doc3" class="yui-t2">
+   
+   <div id="bd">
+    <div id="yui-main">
+    <div class="yui-b">
+    <h3>Update Field in records</h3><br/>
+
+    <p>Update Field in records in the catalog.<p>
+
+  [% IF bad_rows && bad_rows.size > 0 %]
+    <h4>Records with problems</h4>
+    <table>
+        <tr>
+            <th>biblionumber</th>
+            <th>criteria_subfield</th>
+            <th>Error</th>
+        </tr>
+      [% FOREACH biblionumber IN bad_rows.keys %]
+        <tr>
+            <td>[% biblionumber %]</td>
+            <td>
+              <table>
+          [% FOREACH row IN bad_rows.$biblionumber.updates %]
+                <tr><td>[% row.criteria_subfield %]</td></tr>
+          [% END %]
+              </table>
+            </td>
+            <td><span>Record doesn't exist on DB<span></td>
+        </tr>
+    [% END %]
+    </table>
+  [% END %]
+
+        <form method="get">
+            <input type="hidden" name="class" value="[% CLASS %]"/>
+            <input type="hidden" name="method" value="[% METHOD %]"/>
+            <input type="hidden" name="step" id="step" value="welcome"/>
+            <input type="hidden" name="uploadedfileid" id="uploadedfileid" value="[% uploadedfileid %]" />
+            <fieldset class="action">
+                <button id="cancel" class="btn btn-default submit" type="submit">Ok</button>
+            </fieldset>
+        </form>
+
+</div>
+</div>
+<div class="yui-b">
+[% INCLUDE 'tools-menu.inc' %]
+</div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %]

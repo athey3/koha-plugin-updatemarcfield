@@ -1,0 +1,105 @@
+[% INCLUDE 'doc-head-open.inc' %]
+ <title>Koha &rsaquo; Tools &rsaquo; Update Marc Field in records</title>
+[% INCLUDE 'doc-head-close.inc' %]
+<script>
+$(document).ready(function(){
+    $("#apply").on("click",function(){
+        $('#step').val('apply');
+    });
+    $("#cancel").on("click",function(e){
+        $('#step').val('cancel');
+    });
+});
+</script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+
+<div id="breadcrumbs">
+    <a href="/cgi-bin/koha/mainpage.pl">Inicio</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+    Update Field in records
+</div>
+
+<div id="doc3" class="yui-t2">
+   
+   <div id="bd">
+    <div id="yui-main">
+    <div class="yui-b">
+    <h3>Update Field in records</h3><br/>
+
+  [% IF bad_rows && bad_rows.size > 0 %]
+    <h4>Records with problems</h4>
+    <table>
+        <tr>
+            <th>biblionumber</th>
+            <th>URL</th>
+            <th>Public note</th>
+            <th>Error</th>
+        </tr>
+      [% FOREACH biblionumber IN bad_rows.keys %]
+        <tr>
+            <td>[% biblionumber %]</td>
+            <td>
+              <table>
+          [% FOREACH row IN bad_rows.$biblionumber.updates %]
+                <tr><td>[% row.u %]</td></tr>
+          [% END %]
+              </table>
+            </td>
+            <td><span>Record doesn't exist on DB<span></td>
+        </tr>
+    [% END %]
+    </table>
+  [% END %]
+
+  [% IF good_rows && good_rows.size > 0 %]
+    <br/><h4>Records to update</h4>
+    <table>
+        <tr>
+            <th>Bib</th>
+            <th>Title</th>
+            <th>Criteria</th>
+            <th>Diff</th>
+        </tr>
+      [% FOREACH biblionumber IN good_rows.keys %]
+        <tr>
+            <td>[% biblionumber %]</td>
+            <td>[% good_rows.$biblionumber.title %]</td>
+            <td>
+              <table>
+          [% FOREACH row IN good_rows.$biblionumber.updates %]
+                <tr><td>$[% row.criteria_subfield %]:<nsp>[% row.criteria %]</td></tr>
+          [% END %]
+              </table>
+            </td>
+            <td><a href="/cgi-bin/koha/plugins/run.pl?class=Koha%3A%3APlugin%3A%3ACom%3A%3ASacFSC%3A%3AUpdateMarcField&method=tool&uploadedfileid=[% uploadedfileid %]&biblionumber=[% biblionumber | uri %]&step=diff" target="_blank" class="btn btn-default diff-button">Diff</a></td>
+        </tr>
+    [% END %]
+    </table>
+  [% END %]
+
+        <form method="get">
+            <input type="hidden" name="class" value="[% CLASS %]"/>
+            <input type="hidden" name="method" value="[% METHOD %]"/>
+            <input type="hidden" name="step" id="step" />
+            <input type="hidden" name="uploadedfileid" id="uploadedfileid" value="[% uploadedfileid %]" />
+            <fieldset class="action">
+              [% IF good_rows.size > 0 %]
+              [%# There are actual results %]
+                <button id="apply" class="btn btn-default submit" type="submit">Apply changes</button>
+              [% ELSE %]
+                <span class="warn">No valid biblionumbers read from file.</span>
+              [% END %]
+                <button id="cancel" class="btn btn-default submit" type="submit">Cancel</button>
+            </fieldset>
+        </form>
+
+</div>
+</div>
+<div class="yui-b">
+[% INCLUDE 'tools-menu.inc' %]
+</div>
+</div>
+[% INCLUDE 'intranet-bottom.inc' %]

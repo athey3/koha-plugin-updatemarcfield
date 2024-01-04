@@ -1,0 +1,29 @@
+[% INCLUDE 'doc-head-open.inc' %]
+ <title>Koha: Impresión de ficha</title>
+[% INCLUDE 'doc-head-close.inc' %]
+  <script type="text/javascript">
+      function printThenClose() {
+          window.print();
+          setTimeout('window.close()', 1);
+      }
+  </script>
+</head>
+<body onload="printThenClose();">
+<div style="width: 100%; display: table; border: 1px solid rgb(230,230,230);">
+ <div style="width: 380px; height: 200px; border: 1px solid rgb(220,220,220); margin: 0 auto 0 auto;">
+  <div id="topo2" style="width: 160px; height: 20px; display: table; background: rgb(240,240,240); position: relative; top: 10px; left: 210px;">
+   <div style="border: 1px solid rgb(210,210,210); display: table-cell; width: 50%; vertical-align: middle; text-align: center;">
+        [% item.itemcallnumber | html %]
+   </div>
+   <div style="border: 1px solid rgb(210,210,210); display: table-cell; width: 50%; vertical-align: middle; text-align: center;">
+        [% item.barcode | html %]
+   </div>
+  </div>
+  <div id="data" style="border: 1px solid rgb(210,210,210); width: 360px; height: 150px; position: relative; left: 10px; top: 20px;">
+    [% biblio.author | html %]<br />
+    [% biblio.title | html %]<br />
+    [% footer %]
+  </div>
+ </div>
+<div>
+</body>
