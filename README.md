@@ -2,8 +2,6 @@
 
 ## UpdateMarcFields koha-plugin
 
-koha-plugin-updatemarcfields
-
 This plugin provides a way to append data fields in Koha MARC records optionaly based on a regex criteria. It also provides the ability to delete data fields based on a regex expression.
 
 ## Usage
