@@ -5,7 +5,7 @@
 This plugin provides a way to append data fields in Koha MARC records optionally based on a regex criteria. It also provides the ability to delete data fields based on a regex expression.
 
 ## Usage
-The plugin expects a CSV file with the following format as input.
+The plugin expects a CSV file with the following format as input. A header line is required.
 
 biblionumber,data_field,ind1,ind2,criteria_subfield,criteria,sub-field codes[,..]
 
@@ -20,22 +20,34 @@ to delete sub-fields by having a criteria and criteria_field with all other
 sub-field codes empty.
 
 CSV Header Description:
+
 biblionumber - Koha biblio number, required
+<br>
 data_field - MARC data field number, required
+<br>
 ind1 - MARC ind1 field, defaults to blank if not present
+<br>
 ind2 - MARC ind2 field, defaults to blank if not present
+<br>
 criteria_subfield - MARC subfield tag value to check against criteria, may be omitted
+<br>
 criteria - MARC subfield criteria, a PERL Regex
+<br>
 "sub-field-code" - MARC subfield code value to add, may be repeated for different sub-field values
 
 ## Example file
 
 biblionumber,data_field,ind1,ind2,criteria_subfield,criteria,d,f,q,u,y
+<br>
 2058,856,4,0,,^(http\:|https\:)\/\/sacfsl\/,/Library/titles/72,383272U.pdf,application/pdf,http://sacfsl-storage//Library/titles/27/382272U.pdf,Test sample U
+<br>
 2058,856,4,0,u,,/Library/titles/27,383272T.pdf,application/pdf,http://sacfsl-storage//Library/titles/27/382272T.pdf,Test sample T
 2445,856,4,0,u,^(http\:|https\:)\/\/sacfsl-storage\/,/Library/titles/07,510207_02.pdf,application/pdf,http://sacfsl-storage//Library/titles/07/510207_02.pdf,v.2
+<br>
 2445,856,4,0,u,^(http\:|https\:)\/\/sacfsl-storage\/,/Library/titles/07,510207_04.pdf,application/pdf,http://sacfsl-storage//Library/titles/07/510207_04.pdf,v.4
+<br>
 1063,856,4,0,,^(http\:|https\:)\/\/sacfsl-storage\/,/Library/titles/63,168963A.pdf,application/pdf,http://sacfsl-storage//Library/titles/07/168963A.pdf,v.4
+<br>
 1968,856,,,u,^(http\:|https\:)\/\/sacfsl-storage\/,,,,
 
 ## Quick Installation Steps
